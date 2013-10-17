@@ -6,5 +6,9 @@
 #*
 .DS_Store
 
+etc/uwsgi.yaml
+etc/supervisor-part.conf
+etc/nginx-part.conf
+
 venv/*
 logs/*
