@@ -2,7 +2,7 @@
 #coding: utf-8
 
 from flask import Flask
-from common import bp as bp_common
+from common.views import bp as bp_common
 
 def create_app():
 
@@ -36,7 +36,7 @@ def create_app():
 
 def register_jinja(tApp):
     # Template Filter
-    @app.template_filter('')
+    @tApp.template_filter('nullempty')
     def ifnull(value, default=""):
         return default if value is None else value
 

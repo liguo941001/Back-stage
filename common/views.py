@@ -2,7 +2,8 @@
 
 from flask import Blueprint
 
-bp = Blueprint(__name__)
+bp = Blueprint('common', __name__)
+
 
 @bp.route('/login')
 def login():
