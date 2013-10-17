@@ -1,11 +1,11 @@
 
 * TODOs
-** Semantic UI
-** AngularJS `1.0.8`
-** AngularJS-UI
-** Flask-Script
-** Redis (For cache)
-** Celery (For tasks)
++ Semantic UI
++ AngularJS `1.0.8`
++ AngularJS-UI
++ Flask-Script
++ Redis (For cache)
++ Celery (For tasks)
 
 
 * Deploy Steps
