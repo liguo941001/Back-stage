@@ -1,0 +1,10 @@
+*.swp
+*.pyc
+*.pyo
+*.log
+*~
+#*
+.DS_Store
+
+venv/*
+logs/*
