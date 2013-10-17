@@ -3,7 +3,7 @@
 *.pyo
 *.log
 *~
-#*
+.#*
 .DS_Store
 
 etc/uwsgi.yaml

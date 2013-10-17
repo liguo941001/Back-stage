@@ -1,0 +1,41 @@
+
+* TODOs
+** Semantic UI
+** AngularJS `1.0.8`
+** AngularJS-UI
+** Flask-Script
+** Redis (For cache)
+** Celery (For tasks)
+
+
+* Deploy Steps
+  1. Make virtualenv folder `venv`, then install the dependencies
+  2. Copy `nginx-part.conf` ==> `/usr/local/nginx/conf/site-enabled/`
+     > Then change it for your app.
+  3. Copy `supervisor-part.conf` ==> `/etc/supervisord.conf`
+     > Then change it for your app.
+  4. Copy `uwsgi.yaml` ==> `{webapp-dir}/etc/`
+     > Then change it for your app.
+  5. Kill supervisord process, then restart it.
+     > `supervisord -c /etc/supervisord.conf`
+     
+#+BEGIN_SRC bash
+# Setp.1
+cd {webapp-dir}
+virtualenv venv
+
+# Step.2
+cp etc/config-samples/nginx-part.conf /usr/local/nginx/conf/site-enabled/{domain-name}
+vim /usr/local/nginx/conf/site-enabled/{domain-name}
+
+# Step.3 : From `etc/config-samples/supervisor-part.conf`
+vim /etc/supervisord.conf
+
+# Step.4
+cp etc/config-samples/uwsgi.yaml etc/
+vim etc/uwsgi.yaml
+
+# Step.5
+pkill -KILL supervisord
+supervisord -c /etc/supervisord.conf
+#+END_SRC
