@@ -8,10 +8,15 @@
 + Celery (For tasks)
 
 
+* Dependencies  
++ For deploy: [ supervisor, uwsgi ]
++ For application: [ flask, flask_sqlalchemy ]
+  
+  
 * Deploy Steps
   1. Make virtualenv folder `venv`, then install the dependencies
-  2. Copy `nginx-part.conf` ==> `/usr/local/nginx/conf/site-enabled/`
-     > Then change it for your app.
+  2. Copy `nginx-part.conf` ==> `/usr/local/nginx/conf/sites-enabled/`
+     > Then change it for your app, then link softly to sites-avaiable
   3. Copy `supervisor-part.conf` ==> `/etc/supervisord.conf`
      > Then change it for your app.
   4. Copy `uwsgi.yaml` ==> `{webapp-dir}/etc/`
@@ -23,13 +28,14 @@
 # Setp.1
 cd {webapp-dir}
 virtualenv venv
+mkdir logs
 
-# Step.2
-cp etc/config-samples/nginx-part.conf /usr/local/nginx/conf/site-enabled/{domain-name}
-vim /usr/local/nginx/conf/site-enabled/{domain-name}
+l# Step.2
+cp etc/config-samples/nginx-part.conf /usr/local/nginx/conf/sites-enabled/{domain-name}
+vim /usr/local/nginx/conf/sites-enabled/{domain-name}
 
-# Step.3 : From `etc/config-samples/supervisor-part.conf`
-vim /etc/supervisord.conf
+# Step.3
+vim etc/config-samples/supervisor-part.conf /etc/supervisord.conf
 
 # Step.4
 cp etc/config-samples/uwsgi.yaml etc/
