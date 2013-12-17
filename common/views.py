@@ -1,7 +1,7 @@
 #coding: utf-8
 
 import json
-from flask import Blueprint, request, url_for, render_template
+from flask import Blueprint, request, redirect, url_for, render_template
 from .models import User
 from .jsontable import pre_process, get_data
 
@@ -29,7 +29,11 @@ TABLES = {
 
 pre_process(TABLES)
 
+@bp.route('/')
+def index():
+    return redirect(url_for('common.users'))
 
+    
 @bp.route('/users')
 def users():
     return render_template('users.html')
