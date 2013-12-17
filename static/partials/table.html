@@ -1,0 +1,93 @@
+
+<div id="content-bar">
+
+  <h3>{{title}} ({{count}})</h3>
+  <hr />
+  
+  <div class="toolbar">
+    <div ng-include src="tempToolbarLeft"></div>
+    <form class="form-inline pull-left" role="form">
+      <div class="form-group">
+        <input type="text" name="targetPage"
+               class="form-control" style="width:60px;"
+               ng-model="targetPage" placeholder="页码">
+      </div>
+      <button class="btn btn-primary" ng-click="gotoPage(targetPage)">
+        <i class="fa fa-arrow-right"></i></button>
+    </form>
+    
+    
+    <div ng-if="selected && canDel" class="btn-group pull-left" style="margin-left: 15px;">
+      <a href="#" class="btn {{actionMeta['del'].btn}}"
+         ng-click="del()"><i class="fa {{actionMeta['del'].icon}}"></i> {{actionMeta['del'].label}}</a>
+    </div>
+
+    <!-- Pagination -->
+    
+    <ul class="pagination pull-right">
+      <li ng-repeat="p in pagination track by $index"
+          ng-class="p==null && 'disabled' || (p==page && 'active' || '')">
+        <a href="#" ng-click="loadPage({page:p})">{{ p==null && '...' || p }}</a>
+      </li>
+    </ul>
+
+    <div class="clearfix"> </div>
+  </div>
+</div>
+
+<div id="content">
+  <div class="row">
+    <div class="col-lg-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!-- Checkbox -->
+            <th ng-if="canDel" style="width:30px" >
+              <input ng-if="allSelected" type="checkbox" checked="checked" ng-click="selectRow(-1)" />
+              <input ng-if="!allSelected" type="checkbox" ng-click="selectRow(-1)" />
+            </th>
+
+            <!-- Edit button -->
+            <th ng-if="canEdit" style="width:45px"></th>
+            
+            <th ng-repeat="k in keys">
+              <div ng-switch on="sortableDict[k]">
+                <a href="#" ng-switch-when="true" ng-click="orderBy(k)">{{ headDict[k] }}</a>
+                <span ng-switch-when="false">{{ headDict[k] }}</span>
+              </div> 
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows -->
+          <tr ng-repeat="row in rows" ng-init="ridx=$index">
+            <!-- Checkbox -->
+            <td ng-if="canDel">
+              <input ng-if="selectedRows[$index]" type="checkbox" checked="checked" ng-click="selectRow($index)" />
+              <input ng-if="!selectedRows[$index]" type="checkbox" ng-click="selectRow($index)" />
+            </td>
+
+            <!-- Edit button -->
+            <td ng-if="canEdit">
+              <a class="btn btn-xs btn-primary" ng-href="{{actions.edit.link}}?oid={{oids[$index]}}">
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+            
+            <!-- Content -->
+            <td ng-repeat="cell in row">
+              <div ng-switch on="typeDict[keys[$index]]">
+                <!-- link -->
+                <a href="{{cell.link}}" ng-switch-when="link">{{cell.value}}</a>
+                <!-- Other -->
+                <span ng-switch-default>{{cell.value}}</span>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div> <!-- .col-lg-12 -->
+  </div>
+  
+</div>

@@ -2,7 +2,9 @@
 #coding: utf-8
 
 from flask import Flask
+from common.models import User
 from common.views import bp as bp_common
+from common.gvars import db
 
 def create_app():
 
@@ -13,41 +15,30 @@ def create_app():
     for bp in blueprints:
         tApp.register_blueprint(bp)
         
-    register_jinja(tApp)
     
-    ############################################################
-    # Request management
-    @tApp.before_request
-    def before_request():
-        pass
-
-    # Error Handler
-    @tApp.errorhandler(404)
-    def error_404(e):
-        return 'Not Found! There is nothing here......', 404
-
-        
-    @tApp.route('/')
-    def index():
-        return 'index'
-
+    db.init_app(tApp)
+    db.app = tApp
+    # init_db(tApp)
+    
     return tApp
 
 
-def register_jinja(tApp):
-    # Template Filter
-    @tApp.template_filter('nullempty')
-    def ifnull(value, default=""):
-        return default if value is None else value
-
-    # Template function
-    @tApp.context_processor
-    def context_processor():
-        def demo_func():
-            return 'demo processor'
-            
-        return { 'demo_func': demo_func }
-
+def init_db(tApp):
+    from datetime import datetime, timedelta
+    
+    db.create_all()
+    for i in range(1, 201):
+        user = User()
+        user.age = i
+        user.name = 'NAME-{0}'.format(i)
+        user.gender = True if i%2 == 1 else False
+        user.birthday = datetime.now() - timedelta(seconds=i)
+        db.session.add(user)
+        
+    db.session.commit()
+    print 'Database Init completed!'
+    # for u in User.query.all(): print u.age, u.name, u.gender, u.birthday, u.tags
+    
         
 app = create_app()
 

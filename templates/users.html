@@ -1,0 +1,19 @@
+
+{% extends "layout.html" %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row" ng-controller="Ctrl">
+    <div class="" ng-include="tempBaseUrl">
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block ext_script %}
+<script type="text/javascript">
+  initCurrentApp("/users.json", "")
+</script>
+{% endblock ext_script %}
