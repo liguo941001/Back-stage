@@ -9,6 +9,7 @@
 etc/uwsgi.yaml
 etc/supervisor-part.conf
 etc/nginx-part.conf
+etc/settings.py
 
 venv/*
 logs/*

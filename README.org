@@ -9,7 +9,7 @@
 
 
 * Dependencies  
-+ For deploy: [ supervisor, uwsgi ]
++ For deploy: [ nginx, supervisor, uwsgi ]
 + For application: [ flask, flask_sqlalchemy ]
   
   
@@ -30,7 +30,7 @@ cd {webapp-dir}
 virtualenv venv
 mkdir logs
 
-l# Step.2
+# Step.2
 cp etc/config-samples/nginx-part.conf /usr/local/nginx/conf/sites-enabled/{domain-name}
 vim /usr/local/nginx/conf/sites-enabled/{domain-name}
 
