@@ -1,7 +1,9 @@
+* Demo
+http://ahorn.me:7788/users
+
 
 * TODOs
-+ Semantic UI
-+ AngularJS `1.0.8`
++ AngularJS `1.2.5`
 + AngularJS-UI
 + Flask-Script
 + Redis (For cache)
