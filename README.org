@@ -1,49 +1,30 @@
 * Demo
-http://ahorn.me:7788/users
+> http://ahorn.me:7788/users
 
+
+* Features
++ 异常简洁的配置方式
++ 表数据可排序: {sortable:True|False}
++ 支持多种表数据展现类型: [text, link]
++ 基于AngularJS构建前端界面, 更新数据不用刷新页面, 而且JS代码简洁, 使
+  用CoffeeScript改写后更简洁哟！
++ 数据更新通过JSON API, 有效降低前后端的耦合度, 更换前端框架只需重写模板
+
+
+* 如何运行本项目?
+#+BEGIN_SRC
+git clone https://github.com/TheWaWaR/angular-table.git
+pip install flask_sqlalchemy
+python webapp.py 8080
+#+END_SRC
+  
 
 * TODOs
-+ AngularJS `1.2.5`
-+ AngularJS-UI
-+ Flask-Script
-+ Redis (For cache)
-+ Celery (For tasks)
++ 添加表数据展现类型: [enum, tags, datetime]
++ 可编辑的数据单元: 考虑参考 x-edit Bootstrap.3
++ Redis (For cache) ==> 增加千万级数据量的表(需要用Postgresql), 针对该
+  表建立索引和必要的查询缓存
++ Celery (For tasks) ==> 创建一些后台爬虫任务
 
 
-* Dependencies  
-+ For deploy: [ nginx, supervisor, uwsgi ]
-+ For application: [ flask, flask_sqlalchemy ]
   
-  
-* Deploy Steps
-  1. Make virtualenv folder `venv`, then install the dependencies
-  2. Copy `nginx-part.conf` ==> `/usr/local/nginx/conf/sites-enabled/`
-     > Then change it for your app, then link softly to sites-avaiable
-  3. Copy `supervisor-part.conf` ==> `/etc/supervisord.conf`
-     > Then change it for your app.
-  4. Copy `uwsgi.yaml` ==> `{webapp-dir}/etc/`
-     > Then change it for your app.
-  5. Kill supervisord process, then restart it.
-     > `supervisord -c /etc/supervisord.conf`
-     
-#+BEGIN_SRC bash
-# Setp.1
-cd {webapp-dir}
-virtualenv venv
-mkdir logs
-
-# Step.2
-cp etc/config-samples/nginx-part.conf /usr/local/nginx/conf/sites-enabled/{domain-name}
-vim /usr/local/nginx/conf/sites-enabled/{domain-name}
-
-# Step.3
-vim etc/config-samples/supervisor-part.conf /etc/supervisord.conf
-
-# Step.4
-cp etc/config-samples/uwsgi.yaml etc/
-vim etc/uwsgi.yaml
-
-# Step.5
-pkill -KILL supervisord
-supervisord -c /etc/supervisord.conf
-#+END_SRC
