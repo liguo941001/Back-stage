@@ -16,7 +16,7 @@ TABLES = {
             {'key': 'name', 'head': u'名字',
              'type': 'link',
              'link': lambda record: url_for('common.users_edit', oid=record.id)},
-            {'key': 'gender', 'head': u'性别',},
+            {'key': 'gender', 'head': u'性别', 'sortable': False},
             {'key': 'birthday', 'head': u'生日'},
             # {'key': 'tags', 'head': u'标签'}
         ],
