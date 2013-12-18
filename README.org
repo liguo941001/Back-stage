@@ -17,7 +17,77 @@ git clone https://github.com/TheWaWaR/angular-table.git
 pip install flask_sqlalchemy
 python webapp.py 8080
 #+END_SRC
-  
+
+
+* 如何将本项目的代码嵌入到你们的系统中去?
+** 1. 此项目涉及的关键文件
+   
+#+BEGIN_SRC
+### 后台代码 ###
+common/views.py             ==> 包含了定义数据表以及如何使用的代码
+common/jsontable.py         ==> 包含预处理Table元数据以及生成数据的函数
+
+### 前台代码 ###
+static/js/controllers/table.coffee
+static/js/controllers/table.js       ==> AngularJS 的 controller 代码, 包含 initCurrentApp 函数
+static/partials/table.html           ==> Table展现的模板代码(基于Bootstrap.v3)
+#+END_SRC
+
+** 2. 嵌入方式及注意事项
+a. 前端页面代码
+#+BEGIN_SRC
+<html ng-app="tableApp">
+    ...
+    <div class="row" ng-controller="Ctrl">
+      <div class="" ng-include="tempBaseUrl"></div>
+    </div>
+    ...
+
+    <script type="text/javascript" src="/static/js/libs/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/controllers/table.js"></script>    
+    <script type="text/javascript">
+      initCurrentApp("/users.json", "/static/partials/left-toolbar.html")
+    </script>
+    ...
+</html>
+#+END_SRC
+
+b. 描述要展现的数据表, 并预处理这些元数据
+#+BEGIN_SRC
+TABLES = {
+    'users': {
+        'model': User,   # 数据模型类
+        'columns': [
+            {'key': 'age', 'head': u'年龄'},
+            {'key': 'name', 'head': u'名字',
+             'type': 'link',
+             'link': lambda record: url_for('common.users_edit', oid=record.id)},
+            {'key': 'gender', 'head': u'性别', 'sortable': False},
+            {'key': 'birthday', 'head': u'生日'},
+        ],
+        'actions': {
+            'edit': {'endpoint': 'common.users_edit'},
+            'del': {'endpoint': 'common.users_del'},
+        }
+    }
+}
+...
+
+from jsontable import pre_process
+pre_process(TABLES)
+#+END_SRC
+
+c. JSON API 接口代码
+#+BEGIN_SRC
+from jsontable import get_data
+
+@bp.route('/users.json')
+def users_json():
+    data = get_data(request, TABLES['users'])
+    data['title'] = u'用户列表'
+    return json.dumps(data)
+#+END_SRC
+
 
 * TODOs
 + 添加表数据展现类型: [enum, tags, datetime]
@@ -25,6 +95,3 @@ python webapp.py 8080
 + Redis (For cache) ==> 增加千万级数据量的表(需要用Postgresql), 针对该
   表建立索引和必要的查询缓存
 + Celery (For tasks) ==> 创建一些后台爬虫任务
-
-
-  
