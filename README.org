@@ -34,7 +34,7 @@ static/partials/table.html           ==> Table展现的模板代码(基于Bootst
 #+END_SRC
 
 ** 2. 嵌入方式及注意事项
-a. 前端页面代码
+A. 前端页面代码
 #+BEGIN_SRC
 <html ng-app="tableApp">
     ...
@@ -52,7 +52,7 @@ a. 前端页面代码
 </html>
 #+END_SRC
 
-b. 描述要展现的数据表, 并预处理这些元数据
+B. 描述要展现的数据表, 并预处理这些元数据
 #+BEGIN_SRC
 TABLES = {
     'users': {
@@ -77,7 +77,7 @@ from jsontable import pre_process
 pre_process(TABLES)
 #+END_SRC
 
-c. JSON API 接口代码
+C. JSON API 接口代码
 #+BEGIN_SRC
 from jsontable import get_data
 
