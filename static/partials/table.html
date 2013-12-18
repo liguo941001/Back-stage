@@ -52,7 +52,10 @@
             
             <th ng-repeat="k in keys">
               <div ng-switch on="sortableDict[k]">
-                <a href="#" ng-switch-when="true" ng-click="orderBy(k)">{{ headDict[k] }}</a>
+                <a href="#" ng-switch-when="true"
+                   ng-click="orderBy(k)">
+                  {{ headDict[k] }} <i class="fa"
+                  ng-class="order==k ? (orderDirection=='asc' ? 'fa-sort-up':'fa-sort-down') : 'fa-sort' "></i></a>
                 <span ng-switch-when="false">{{ headDict[k] }}</span>
               </div> 
             </th>
