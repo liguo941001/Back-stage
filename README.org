@@ -1,5 +1,5 @@
 * Demo
- http://table.ahorn.me/users
+ http://table.ahorn.me/
 
 
 * Features
