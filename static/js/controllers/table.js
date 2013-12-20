@@ -45,6 +45,8 @@ initApp = function(appName, ctrlName, jsonUrl, templateBaseUrl, templateToolbarL
       };
       $scope.tempToolbarLeft = templateToolbarLeft;
       $scope.tempBaseUrl = templateBaseUrl;
+      $scope.targetPage = 1;
+      $scope.loading = false;
       $scope.loadPage = function(params) {
         if (params.page === null) {
           return 0;
@@ -55,6 +57,7 @@ initApp = function(appName, ctrlName, jsonUrl, templateBaseUrl, templateToolbarL
         console.log("loadPage.BEGIN:", params, defaultParams);
         $.extend(defaultParams, params);
         console.log("loadPage.END:", defaultParams);
+        $scope.loading = true;
         return ($http.get(jsonUrl, {
           params: defaultParams
         })).success(function(data) {
@@ -87,6 +90,7 @@ initApp = function(appName, ctrlName, jsonUrl, templateBaseUrl, templateToolbarL
             }
             return _results;
           })();
+          $scope.loading = false;
           return console.log($scope.pagination, $scope.selected, $scope.allSelected);
         });
       };
@@ -176,7 +180,6 @@ initApp = function(appName, ctrlName, jsonUrl, templateBaseUrl, templateToolbarL
           page: targetPage
         });
       };
-      $scope.targetPage = 1;
       return $scope.loadPage({
         page: 1
       });

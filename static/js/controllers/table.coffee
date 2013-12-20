@@ -38,6 +38,8 @@ initApp = (appName, ctrlName, jsonUrl,
         }
         $scope.tempToolbarLeft = templateToolbarLeft
         $scope.tempBaseUrl = templateBaseUrl
+        $scope.targetPage = 1
+        $scope.loading = false
 
         # Function.1: Load Page
         $scope.loadPage = (params) ->
@@ -48,6 +50,7 @@ initApp = (appName, ctrlName, jsonUrl,
             $.extend defaultParams, params
             console.log "loadPage.END:", defaultParams
 
+            $scope.loading = true
             ($http.get jsonUrl, {params:defaultParams}).success (data) ->
                 console.log "data:", data
                 $scope.title = data.title
@@ -75,6 +78,7 @@ initApp = (appName, ctrlName, jsonUrl,
                 $scope.selectedCnt = 0
                 $scope.selectedRows = (false for _ in [1..data.rows.length])
 
+                $scope.loading = false
                 console.log $scope.pagination, $scope.selected, $scope.allSelected
 
         # Function.2: Order By
@@ -141,7 +145,6 @@ initApp = (appName, ctrlName, jsonUrl,
 
 
         #### Init
-        $scope.targetPage = 1
         $scope.loadPage {page:1}
     ]
     

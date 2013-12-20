@@ -1,6 +1,11 @@
 
 <div class= "panel panel-default">
-  <div class= "panel-heading"><strong>{{title}} ({{count}})</strong></div>
+  <div class= "panel-heading">
+    {{title}} <span ng-switch on="loading">
+      <strong ng-switch-when="false">({{count}})</strong>
+      <i ng-switch-when="true" style="font-size:16px;color:#eea236;" class="fa fa-spinner fa-spin"></i>
+    </span>
+  </div>
   <div class= "panel-body">
     
     <div id="content-bar">
@@ -15,12 +20,13 @@
           <button class="btn btn-primary" ng-click="gotoPage(targetPage)">
             <i class="fa fa-arrow-right"></i></button>
         </form>
-        
-        
+
         <div ng-if="selected && canDel" class="btn-group pull-left" style="margin-left: 15px;">
           <a href="#" class="btn {{actionMeta['del'].btn}}"
              ng-click="del()"><i class="fa {{actionMeta['del'].icon}}"></i> {{actionMeta['del'].label}}</a>
         </div>
+
+        
 
         <!-- Pagination -->
         
