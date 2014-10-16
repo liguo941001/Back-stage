@@ -53,7 +53,7 @@ A. 前端页面代码
 #+END_SRC
 
 B. 描述要展现的数据表, 并预处理这些元数据
-#+BEGIN_SRC
+#+BEGIN_SRC python
 TABLES = {
     'users': {
         'model': User,   # 数据模型类
@@ -78,7 +78,7 @@ pre_process(TABLES)
 #+END_SRC
 
 C. JSON API 接口代码
-#+BEGIN_SRC
+#+BEGIN_SRC python
 from jsontable import get_data
 
 @bp.route('/users.json')
