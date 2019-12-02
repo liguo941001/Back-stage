@@ -45,7 +45,7 @@ def fill_users():
 def test_query_users():
     users = session.query(User).all()
     for u in users:
-        print u.age, u.name, u.gender, u.born, u.tags
+        print(u.age, u.name, u.gender, u.born, u.tags)
 
 
 fill_users()

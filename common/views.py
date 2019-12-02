@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 
 import json
 from flask import Blueprint, request, redirect, url_for, render_template
@@ -6,7 +6,6 @@ from .models import User
 from .jsontable import pre_process, get_data
 
 bp = Blueprint('common', __name__)
-
 
 TABLES = {
     'users': {
@@ -29,11 +28,12 @@ TABLES = {
 
 pre_process(TABLES)
 
+
 @bp.route('/')
 def index():
     return redirect(url_for('common.users'))
 
-    
+
 @bp.route('/users')
 def users():
     return render_template('users.html')
@@ -44,16 +44,15 @@ def users_json():
     data = get_data(request, TABLES['users'])
     data['title'] = u'用户列表'
     return json.dumps(data)
-    
+
 
 @bp.route('/users/edit')
 def users_edit():
     oid = request.values.get('oid', None)
-    return 'oid:' +  oid
-    
+    return 'oid:' + oid
+
 
 @bp.route('/users/del', methods=['POST'])
 def users_del():
     oids = request.values.get('oids', None)
-    return 'oids:' +  oids
-    
+    return 'oids:' + oids

@@ -7,7 +7,7 @@ from .gvars import db
 
 
 def pre_process(meta_dict):
-    for KEY, meta in meta_dict.iteritems():
+    for KEY, meta in meta_dict.items():
         # print 'KEY:', KEY
         columns = meta['columns']
         actions = meta.get('actions', {})
@@ -36,7 +36,7 @@ def pre_process(meta_dict):
             keys.append(key)
             
             fields = column.keys()
-            for field, someDict in DICTS.iteritems():
+            for field, someDict in DICTS.items():
                 if field in fields:
                     someDict[key] = column[field]
 
